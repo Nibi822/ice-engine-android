@@ -242,10 +242,6 @@ class MainMenuState extends MusicBeatState
 			var shiftMult:Int = 1;
 			if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 			
-			if (FlxG.mouse.wheel != 0)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-FlxG.mouse.wheel);
 			}
 			if (controls.UI_UP_P)
 			{
