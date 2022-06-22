@@ -169,9 +169,9 @@ class MainMenuState extends MusicBeatState
 		add(versionShit);
 
 		// NG.core.calls.event.logEvent('swag').send();
-
+		
 		changeItem();
-               }
+}
 	
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
