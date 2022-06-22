@@ -241,7 +241,6 @@ class MainMenuState extends MusicBeatState
 		{
 			var shiftMult:Int = 1;
 			if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
-			
 			}
 			if (controls.UI_UP_P)
 			{
