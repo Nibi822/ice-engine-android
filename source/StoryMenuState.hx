@@ -187,7 +187,7 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
-		#if android
+        #if android
 		addVirtualPad(FULL, A_B_X_Y);
 		addPadCamera();
 		#end
@@ -219,9 +219,7 @@ class StoryMenuState extends MusicBeatState
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 		if (!movedBack && !selectedWeek)
-		{
-			var upP = controls.UI_UP_P;
-			var downP = controls.UI_DOWN_P;			{
+			{
 				changeWeek(-shiftMult);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				holdTime = 0;
@@ -267,7 +265,7 @@ class StoryMenuState extends MusicBeatState
 
 			if(FlxG.keys.justPressed.CONTROL #if android || virtualPad.buttonX.justPressed #end)
 			{
-								#if android
+				#if android
 				removeVirtualPad();
 				#end
 				persistentUpdate = false;
@@ -279,6 +277,8 @@ class StoryMenuState extends MusicBeatState
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
 				//FlxG.sound.play(Paths.sound('scrollMenu'));
+			}
+			else if (controls.ACCEPT || FlxG.keyboard.9)
 			{
 				selectWeek();
 			}
