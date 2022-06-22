@@ -31,20 +31,20 @@ class MainMenuState extends MusicBeatState
 	public static var micdEngineVersion:String = '2.0.3'; //This is NOT used for Discord RPC
 	public static var curSelected:Int = 0;
 	public static var nightly:String = "a";
-
+	
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 	var menuItems:FlxTypedGroup<FlxSprite>;
-
+	
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
 		#if MODS_ALLOWED 'mods', #end
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
+		#if !switch 'donate', #end
 		'options'
 	];
-
 
 	var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('mBG_Main'));
 	public var menuItem:FlxSprite;
@@ -56,15 +56,15 @@ class MainMenuState extends MusicBeatState
 	var debugKeys:Array<FlxKey>;
 
 	var camLerp:Float = 0.1;
-
+	
 	override function create()
 	{
+		WeekData.loadTheFirstEnabledMod();
 
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		camGame = new FlxCamera();
@@ -100,7 +100,7 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 		add(camFollowPos);
 
-		gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x55AE59E4, 0xAA19ECFF], 1, 90, true);
+gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x55AE59E4, 0xAA19ECFF], 1, 90, true);
 		gradientBar.y = FlxG.height - gradientBar.height;
 		add(gradientBar);
 		gradientBar.scrollFactor.set(0, 0);
@@ -143,14 +143,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 
-		camGame.follow(camFollow, null, camLerp);
-
-		camGame.zoom = 3;
-		side.alpha = 0;
-		FlxTween.tween(camGame, {zoom: 1}, 1.1, {ease: FlxEase.expoInOut});
-		FlxTween.tween(bg, {angle: 0}, 1, {ease: FlxEase.quartInOut});
-		FlxTween.tween(side, {alpha: 1}, 0.9, {ease: FlxEase.quartInOut});
-
 
 		camGame.follow(camFollowPos, null, 1);
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Ice Engine v" + iceEngineVersion, 12);
@@ -173,7 +165,7 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
-
+		
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
 		var leDate = Date.now();
